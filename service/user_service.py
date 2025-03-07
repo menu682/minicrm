@@ -1,0 +1,13 @@
+from model import User
+
+async def get_user_service(id: int):
+    ...
+
+async def create_user_service(user: User):
+    ...
+
+async def delete_user_service(id: int):
+    ...
+
+async def update_user_service(id: int, data: dict):
+    ...
