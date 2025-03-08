@@ -1,18 +1,15 @@
 import uvicorn
 from fastapi import FastAPI
-from controller import user_controller
-from sqlmodel import create_engine, SQLModel
+from DB import lifespan
 
-app = FastAPI()
+from controller import user_controller, status_controller, role_controller
+
+
+app = FastAPI(lifespan = lifespan)
+
 app.include_router(user_controller.router)
-
-
-try:
-    DATABASE_URL = "sqlite:///database.db"
-    engine = create_engine(DATABASE_URL, echo=True)
-    SQLModel.metadata.create_all(engine)
-except Exception as e:
-    e.add_note("DB connection failed")
+app.include_router(status_controller.router)
+app.include_router(role_controller.router)
 
 
 if __name__ == "__main__":
